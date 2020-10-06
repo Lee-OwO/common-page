@@ -1,15 +1,15 @@
 /* eslint-disable */
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
-const from = path.resolve(__dirname, "./dist");
-const to = path.resolve(__dirname, "../common-server/public");
+const from = path.resolve(__dirname, './dist');
+const to = path.resolve(__dirname, '../common-server/public');
 
-del(path.resolve(__dirname, "../common-server/public/page_static"));
+del(path.resolve(__dirname, '../common-server/public/page_static'));
 copy(from, to);
 
 function copy(fromPath, toPath) {
-  fs.access(toPath, (err) => {
+  fs.access(toPath, err => {
     if (err) {
       fs.mkdirSync(toPath);
     }
@@ -19,9 +19,9 @@ function copy(fromPath, toPath) {
       console.error(err);
       return;
     }
-    paths.forEach((item) => {
-      const newFromPath = fromPath + "/" + item;
-      const newToPath = toPath + "/" + item;
+    paths.forEach(item => {
+      const newFromPath = fromPath + '/' + item;
+      const newToPath = toPath + '/' + item;
 
       fs.stat(newFromPath, function(err, stat) {
         if (err) return;
@@ -41,8 +41,8 @@ function del(path, reservePath) {
   if (fs.existsSync(path)) {
     if (fs.statSync(path).isDirectory()) {
       const files = fs.readdirSync(path);
-      files.forEach((file) => {
-        const currentPath = path + "/" + file;
+      files.forEach(file => {
+        const currentPath = path + '/' + file;
         if (fs.statSync(currentPath).isDirectory()) {
           del(currentPath, reservePath);
         } else {
