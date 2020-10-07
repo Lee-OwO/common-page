@@ -1,11 +1,12 @@
 /* eslint-disable */
 const fs = require('fs');
 const path = require('path');
+const { assetsDir } = require('./vue.config');
 
 const from = path.resolve(__dirname, './dist');
 const to = path.resolve(__dirname, '../common-server/public');
 
-del(path.resolve(__dirname, '../common-server/public/page_static'));
+del(path.resolve(__dirname, `../common-server/public/${assetsDir}`));
 copy(from, to);
 
 function copy(fromPath, toPath) {
