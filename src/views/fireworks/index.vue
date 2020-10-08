@@ -1,7 +1,6 @@
 <template>
   <div class="fireworks">
     <canvas ref="fireworksCanvas"></canvas>
-    <canvas ref="textCanvas"></canvas>
   </div>
 </template>
 
@@ -16,23 +15,19 @@ export default {
     const route = useRoute();
 
     const fireworksCanvas: Ref<HTMLCanvasElement | null> = ref(null);
-    const textCanvas: Ref<HTMLCanvasElement | null> = ref(null);
-    const width: Ref<number> = ref(980);
-    const height: Ref<number> = ref(1745);
+
+    const width = 980;
+    const height = 1745;
 
     const startLoop = (des: string) => {
-      let fireCtx, textCtx;
-      if (fireworksCanvas.value && textCanvas.value) {
-        fireworksCanvas.value.width = width.value;
-        fireworksCanvas.value.height = height.value;
+      let fireCtx;
+      if (fireworksCanvas.value) {
+        fireworksCanvas.value.width = width;
+        fireworksCanvas.value.height = height;
         fireCtx = fireworksCanvas.value.getContext('2d');
-
-        textCanvas.value.width = width.value;
-        textCanvas.value.height = height.value;
-        textCtx = textCanvas.value.getContext('2d');
       }
-      if (fireCtx && textCtx) {
-        firkworks(fireCtx, textCtx, des).loop();
+      if (fireCtx) {
+        firkworks(fireCtx, des).loop();
       }
     };
 
@@ -53,8 +48,7 @@ export default {
     });
 
     return {
-      fireworksCanvas,
-      textCanvas
+      fireworksCanvas
     };
   }
 };
