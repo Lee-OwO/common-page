@@ -1,16 +1,18 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
+import Home from '../views/fireworks/index.vue';
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'fireworks',
-    component: import('@/views/fireworks/index.vue')
+    name: 'Home',
+    component: Home
   },
   {
-    path: '/fire',
-    name: 'fire',
+    path: '/fireworks',
+    name: 'fireworks',
     component: () => {
-      import(/* webpackChunkName: "fire" */ '@/views/fireworks/index.vue');
+      import(/* webpackChunkName: "fire" */ '../views/fireworks/index.vue');
     }
   }
 ];

@@ -1,7 +1,7 @@
 <template>
   <div class="fireworks">
     <canvas ref="fireworksCanvas"></canvas>
-    <canvas class="text" ref="textCanvas"></canvas>
+    <canvas ref="textCanvas"></canvas>
   </div>
 </template>
 
@@ -39,6 +39,12 @@ export default {
       textCanvas
     };
   }
+  // mounted() {
+  //   setTimeout(() => {
+  //     console.log(123123);
+  //     this.$router.push('/fireworks');
+  //   }, 5000);
+  // }
 };
 </script>
 

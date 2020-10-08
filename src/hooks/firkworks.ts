@@ -43,7 +43,6 @@ export default function fireworks(
     ctx.canvas.height = fontSize * 1.5;
     ctx.fillStyle = '#fff';
     ctx.font = `${fontSize}px Arial`;
-    console.log(text, 0, fontSize);
     ctx.fillText(text, 0, fontSize);
     const imgData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
     const offsetY = textCtx.canvas.height / 2 - fontSize / 2;
