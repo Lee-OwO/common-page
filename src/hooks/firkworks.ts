@@ -26,6 +26,7 @@ export default function fireworks(
   const targetList: { value: { x: number; y: number }[] } = {
     value: []
   };
+  const showText = !!text;
 
   const initTargetList = () => {
     const ctx = document.createElement('canvas').getContext('2d');
@@ -64,8 +65,10 @@ export default function fireworks(
       return { x, y };
     }
   };
-  initTargetList();
 
+  if (showText) {
+    initTargetList();
+  }
   const rocketListDrew = () => {
     rocketList.value.forEach((rocket, index) => {
       rocket.draw();

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 import Home from '../views/fireworks/index.vue';
+import baseRouter from './base';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -8,13 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: Home
   },
-  {
-    path: '/fireworks',
-    name: 'fireworks',
-    component: () => {
-      import(/* webpackChunkName: "fire" */ '../views/fireworks/index.vue');
-    }
-  }
+  ...baseRouter
 ];
 
 const router = createRouter({

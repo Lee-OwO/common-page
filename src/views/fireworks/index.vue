@@ -8,14 +8,19 @@
 <script lang="ts">
 import { ref, Ref, onMounted } from 'vue';
 import firkworks from '@/hooks/firkworks';
+import { useRoute } from 'vue-router';
+import { getCommonDesDetail } from '@/api/commonDes.ts';
+
 export default {
   setup() {
+    const route = useRoute();
+
     const fireworksCanvas: Ref<HTMLCanvasElement | null> = ref(null);
     const textCanvas: Ref<HTMLCanvasElement | null> = ref(null);
     const width: Ref<number> = ref(980);
     const height: Ref<number> = ref(1745);
 
-    const startLoop = () => {
+    const startLoop = (des: string) => {
       let fireCtx, textCtx;
       if (fireworksCanvas.value && textCanvas.value) {
         fireworksCanvas.value.width = width.value;
@@ -27,11 +32,24 @@ export default {
         textCtx = textCanvas.value.getContext('2d');
       }
       if (fireCtx && textCtx) {
-        firkworks(fireCtx, textCtx, '节日快乐啊').loop();
+        firkworks(fireCtx, textCtx, des).loop();
       }
     };
+
+    const init = async () => {
+      const { tag } = route.query;
+      let text = '';
+      let data;
+      if (tag) {
+        data = await getCommonDesDetail(String(tag));
+      }
+      if (data) {
+        text = data.description;
+      }
+      startLoop(text);
+    };
     onMounted(() => {
-      startLoop();
+      init();
     });
 
     return {
@@ -39,12 +57,6 @@ export default {
       textCanvas
     };
   }
-  // mounted() {
-  //   setTimeout(() => {
-  //     console.log(123123);
-  //     this.$router.push('/fireworks');
-  //   }, 5000);
-  // }
 };
 </script>
 
