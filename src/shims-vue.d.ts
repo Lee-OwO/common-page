@@ -4,3 +4,4 @@ declare module '*.vue' {
   export default component;
 }
 declare module 'mint-ui';
+declare module 'qrcode';
