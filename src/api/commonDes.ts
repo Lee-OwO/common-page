@@ -1,5 +1,5 @@
 import { getApi } from '@/api';
 
-export function getCommonDesDetail(id: string) {
-  return getApi('/api/commonDesDetail', { id });
+export function getCommonDesDetail(tag: string) {
+  return getApi('/api/commonDesDetail', { tag });
 }
