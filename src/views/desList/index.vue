@@ -45,9 +45,6 @@ export default {
     };
 
     const des = ref('');
-    watch(des, val => {
-      console.log(val);
-    });
     const onAddButtonClick = async () => {
       if (des.value === '') {
         return;
@@ -68,7 +65,6 @@ export default {
       const url = getUrl(tag);
       qrcode.toCanvas(canvas.value, url, function(error: string) {
         if (error) console.error(error);
-        console.log('success!');
       });
     };
 

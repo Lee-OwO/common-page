@@ -34,7 +34,15 @@ export default {
       init();
       setTimeout(() => {
         text.value = 'demo';
-      }, 10000);
+      }, 1000);
+      setTimeout(() => {
+        console.log('change');
+        text.value = '123123123';
+      }, 20000);
+      setTimeout(() => {
+        console.log('change');
+        text.value = '结果反抗类毒素极';
+      }, 40000);
     });
 
     return {

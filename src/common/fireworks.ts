@@ -90,6 +90,9 @@ class Shard {
       this.done = true;
     }
   }
+  removeTarget() {
+    this.target = undefined
+  }
   lerp(a: number, b: number, t: number) {
     return Math.abs(b - a) > 0.1 ? a + t * (b - a) : b;
   }

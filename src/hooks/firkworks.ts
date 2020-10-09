@@ -1,30 +1,40 @@
 import { Rocket, Shard, Dot } from '@/common/fireworks';
 import { getTextCanvasData } from '@/utils/dom';
 import { ref, Ref, watch } from 'vue';
-const width = 980;
-const height = 1745;
-const fidelity = 3;
+const width = 750;
+const height = 1334;
+const fidelity = 4;
 
 export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
-  const demo = ref(0)
+  const demo = ref(0);
   setTimeout(() => {
-    demo.value = 10
-  })
+    demo.value = 10;
+  });
 
   let fireCtx: CanvasRenderingContext2D | null = null;
   let targetList: { x: number; y: number }[] = [];
-  let dotList: Dot[] = [];
+  const dotList: Dot[] = [];
+  let oldDotList: Dot[] = [];
   const text = ref('');
   const shardList: Shard[] = [];
   const rocketList: Rocket[] = [];
 
-  const dotListDrew = (fireCtx: CanvasRenderingContext2D) => {
-    fireCtx.save();
-    fireCtx.fillStyle = '#FFF';
+  const dotListDrew = () => {
     dotList.forEach(d => {
-      fireCtx.fillRect(d.x, d.y, d.size, d.size);
+      d.drew();
     });
-    fireCtx.restore();
+  };
+  const dotListClear = () => {
+    if (oldDotList.length) {
+      const index = Math.floor(Math.random() * oldDotList.length);
+      const removeDotList = oldDotList.splice(index, 8);
+      removeDotList.forEach(removeDot => {
+        const targetIndex = dotList.findIndex(dot => dot === removeDot);
+        if (targetIndex !== -1) {
+          dotList.splice(targetIndex, 1);
+        }
+      });
+    }
   };
 
   const shardListDrew = () => {
@@ -37,6 +47,11 @@ export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
         }
         shardList.splice(i, 1);
       }
+    });
+  };
+  const shardListRemoveTarget = () => {
+    shardList.forEach(s => {
+      s.removeTarget();
     });
   };
 
@@ -68,9 +83,10 @@ export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
     if (counter % 15 === 0) {
       rocketList.push(new Rocket(fireCtx));
     }
+    dotListClear();
     rocketListDrew();
     shardListDrew();
-    dotListDrew(fireCtx);
+    dotListDrew();
 
     requestAnimationFrame(() => {
       loop(fireCtx);
@@ -100,7 +116,6 @@ export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
     return result;
   };
   watch(canvas, val => {
-    console.log(val, 'new vallllllllllllllllllllllllll')
     if (!val) return;
     const ctx = initCtx(val);
     if (!ctx) return;
@@ -112,8 +127,9 @@ export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
   });
   watch(text, val => {
     if (!fireCtx) return;
-    dotList = [];
+    oldDotList = oldDotList.concat(dotList);
     targetList = initTargetList(fireCtx, val);
+    shardListRemoveTarget();
   });
 
   return {
