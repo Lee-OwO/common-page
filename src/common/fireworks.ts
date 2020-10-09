@@ -158,4 +158,29 @@ class Rocket {
   }
 }
 
-export { Rocket, Shard };
+class Dot {
+  x: number;
+  y: number;
+  size: number;
+  ctx: CanvasRenderingContext2D;
+
+  constructor(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    size: number
+  ) {
+    this.ctx = ctx;
+    this.x = x;
+    this.y = y;
+    this.size = size;
+  }
+  drew() {
+    this.ctx.save();
+    this.ctx.fillStyle = '#FFF';
+    this.ctx.fillRect(this.x, this.y, this.size, this.size);
+    this.ctx.restore();
+  }
+}
+
+export { Rocket, Shard, Dot };
