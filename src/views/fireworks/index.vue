@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { ref, Ref, onMounted, watch } from 'vue';
+import { ref, Ref, onMounted } from 'vue';
 import useFirkworks from '@/hooks/firkworks';
 import { useRoute } from 'vue-router';
 import { getCommonDesDetail } from '@/api/commonDes.ts';
@@ -15,10 +15,7 @@ export default {
     const route = useRoute();
     const fireworksCanvas: Ref<HTMLCanvasElement | null> = ref(null);
 
-    const { text, demo } = useFirkworks(fireworksCanvas);
-    watch(demo, val => {
-      console.log(val, 'outer demo change============');
-    });
+    const { text, start } = useFirkworks();
 
     const init = async () => {
       const { tag } = route.query;
@@ -32,10 +29,14 @@ export default {
     };
     onMounted(() => {
       init();
+      if (fireworksCanvas.value) {
+        start(fireworksCanvas.value);
+      }
     });
 
     return {
-      fireworksCanvas
+      fireworksCanvas,
+      text
     };
   }
 };

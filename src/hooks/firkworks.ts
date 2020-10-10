@@ -5,12 +5,7 @@ const width = 750;
 const height = 1334;
 const fidelity = 4;
 
-export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
-  const demo = ref(0);
-  setTimeout(() => {
-    demo.value = 10;
-  });
-
+export default function fireworks() {
   let fireCtx: CanvasRenderingContext2D | null = null;
   let targetList: { x: number; y: number }[] = [];
   const dotList: Dot[] = [];
@@ -115,16 +110,15 @@ export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
     }
     return result;
   };
-  watch(canvas, val => {
-    if (!val) return;
-    const ctx = initCtx(val);
+  const start = (canvas:HTMLCanvasElement) => {
+    const ctx = initCtx(canvas);
     if (!ctx) return;
     fireCtx = ctx;
     if (text.value && targetList.length === 0 && dotList.length === 0) {
       targetList = initTargetList(fireCtx, text.value);
     }
     loop(fireCtx);
-  });
+  }
   watch(text, val => {
     if (!fireCtx) return;
     oldDotList = oldDotList.concat(dotList);
@@ -134,6 +128,6 @@ export default function fireworks(canvas: Ref<HTMLCanvasElement | null>) {
 
   return {
     text,
-    demo
+    start
   };
 }
